@@ -1,7 +1,7 @@
 {
     "port": 1337,
-    "time": 60,
-    "timeout": 50,
-    "max_proxies": 5000,
+    "time": 5,
+    "timeout": 1,
+    "max_proxies": 10,
     "console_output": true
 }
