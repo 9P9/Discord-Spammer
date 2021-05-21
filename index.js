@@ -1,5 +1,6 @@
 const proxyChecker = require('proxy-checker');
 const express = require('express');
+const chalk = require(`chalk`); 
 const request = require('request');
 const fs = require('fs');
 const app = express();
@@ -14,7 +15,14 @@ const emitter = new EventEmitter();
 
 emitter.setMaxListeners(Number.POSITIVE_INFINITY);
 
+process.on('unhandledRejection', e => {});
+process.on('uncaughtException', e => {});
+process.on('uncaughtRejection', e => {});
+process.on(`MaxListenersExceededWarning`, e => {console.log("BEEP");});
+process.warn = () => {};
+
 var tokens = [];
+var tested = 1;
 var proxies = [];
 var verified = [];
 var unverified = [];
@@ -192,9 +200,11 @@ scrapeProxies.then(fetched => {
             url: 'http://www.example.com',
         }, (host, port, ok, statusCode, err) => {
             if (ok) proxies.push(`${host}:${port}`);
+			console.log(`[${tested++}/${fetched.length}] ${host}:${port}`);
         });
     });
     console.log(`Checking ${fetched.length} proxies!`);
+	console.log("");
 }).catch(err => {
     proxyChecker.checkProxiesFromFile('Source/proxies.txt', {
         url: 'http://www.example.com',
@@ -227,9 +237,17 @@ setInterval(() => {
     });
 }, 100);
 
-process.on('uncaughtException', (err) => {});
+
 
 app.listen(config.port, () => {
-    console.log(`Started Discord Spammer on port ${config.port}`);
+	process.title = `[313] Lemons Spammer | Tokens: ${authTokens.length}`; 
+	console.log(chalk.hex("fff700")(`
+		▄▄▌  ▄▄▄ .• ▌ ▄ ·.        ▐ ▄ .▄▄ ·   .▄▄ ·  ▄▄▄· ▄▄▄· • ▌ ▄ ·. • ▌ ▄ ·. • ▌ ▄ ·. ▄▄▄ .▄▄▄  
+		██•  ▀▄.▀··██ ▐███▪ ▄█▀▄ •█▌▐█▐█ ▀.   ▐█ ▀. ▐█ ▄█▐█ ▀█ ·██ ▐███▪·██ ▐███▪·██ ▐███▪▀▄.▀·▀▄ █·
+		██▪  ▐▀▀▪▄▐█ ▌▐▌▐█·▐█▌.▐▌▐█▐▐▌▄▀▀▀█▄  ▄▀▀▀█▄ ██▀·▄█▀▀█ ▐█ ▌▐▌▐█·▐█ ▌▐▌▐█·▐█ ▌▐▌▐█·▐▀▀▪▄▐▀▀▄ 
+		▐█▌▐▌▐█▄▄▌██ ██▌▐█▌▐█▌.▐▌██▐█▌▐█▄▪▐█  ▐█▄▪▐█▐█▪·•▐█ ▪▐▌██ ██▌▐█▌██ ██▌▐█▌██ ██▌▐█▌▐█▄▄▌▐█•█▌
+		.▀▀▀  ▀▀▀ ▀▀  █▪▀▀▀ ▀█▄▀▪▀▀ █▪ ▀▀▀▀    ▀▀▀▀ .▀    ▀  ▀ ▀▀  █▪▀▀▀▀▀  █▪▀▀▀▀▀  █▪▀▀▀ ▀▀▀ .▀  ▀	
+	`));
+	console.log(`${chalk.hex("32CD32")('Started Discord Spammer on port')} ${config.port}`);
     console.log(`Checking ${authTokens.length} tokens!`);
 });
