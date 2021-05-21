@@ -54,7 +54,7 @@ You will be able to choose from any of these options
 
 ## Contact
 
-Telegram Chat: https://t.me/DiscordTools
+Discord: https://discord.gg/SJyU6VkHen
 
 ## Donate
 
