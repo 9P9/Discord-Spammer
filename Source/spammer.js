@@ -9,8 +9,8 @@ class Join {
     send() {
         request({
             method: "POST",
-            url: `https://discordapp.com/api/v7/invite/${this.invite}`,
-            json: false,
+            url: `https://discord.com/api/v9/invites/${this.invite}`,
+            json: true,
             proxy: `http://${this.proxy}`,
             headers: {
                 authorization: this.token
@@ -28,7 +28,7 @@ class Leave {
     send() {
         request({
             method: "DELETE",
-            url: `https://discordapp.com/api/v7/users/@me/guilds/${this.guild}`,
+            url: `https://discord.com/api/v9/users/@me/guilds/${this.guild}`,
             json: false,
             proxy: `http://${this.proxy}`,
             headers: {
@@ -54,7 +54,7 @@ class Spam {
             if (this.date + this.time < Date.now()) return;
             request({
                 method: "POST",
-                url: `https://discordapp.com/api/v7/channels/${this.channel}/messages`,
+                url: `https://discord.com/api/v9/channels/${this.channel}/messages`,
                 json: true,
                 proxy: `http://${this.proxy}`,
                 headers: {
@@ -85,7 +85,7 @@ class DM {
             if (this.date + this.time < Date.now()) return;
             request({
                 method: "PATCH",
-                url: "https://discordapp.com/api/v7/users/@me",
+                url: "https://discord.com/api/v9/users/@me",
                 json: true,
                 proxy: `http://${this.proxy}`,
                 headers: {
@@ -99,7 +99,7 @@ class DM {
                 this.id = this.json.id;
                 request({
                     method: "POST",
-                    url: `https://discordapp.com/api/v7/users/${this.id}/channels`,
+                    url: `https://discord.com/api/v9/users/${this.id}/channels`,
                     json: true,
                     proxy: `http://${this.proxy}`,
                     headers: {
@@ -115,7 +115,7 @@ class DM {
                     this.channel = this.json.id;
                     request({
                         method: "POST",
-                        url: `https://discordapp.com/api/v7/channels/${this.channel}/messages`,
+                        url: `https://discord.com/api/v9/channels/${this.channel}/messages`,
                         json: true,
                         proxy: `http://${this.proxy}`,
                         headers: {
@@ -141,7 +141,7 @@ class Friend {
     send() {
         request({
             method: "PUT",
-            url: `https://discordapp.com/api/v7/users/@me/relationships/${this.user}`,
+            url: `https://discord.com/api/v9/users/@me/relationships/${this.user}`,
             json: true,
             proxy: `http://${this.proxy}`,
             headers: {
